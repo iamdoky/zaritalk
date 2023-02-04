@@ -2,42 +2,56 @@ package callbus.zaritalk.dataaccesslayer.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.apache.catalina.User;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "community")
-@Getter
 @Setter
-@ToString
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class Community extends BaseEntity{
+@ToString(callSuper = true)
+public class Community {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @JoinColumn(name = "writer")
     @ManyToOne
-    @Column(name = "writer")
-    Users writer;
+    private User writer;
 
-    @Column(name = "title")
-    String title;
+    @Column(name = "community_title")
+    private String communityTitle;
 
-    @Column(name = "content")
-    String content;
+    @Column(name = "community_content")
+    private String communityContent;
 
     @Column(name = "like")
-    int like = 0;
+    private int likeCount = 0;
 
-    @Column(name = "status")
-    boolean status = true;
+    @JsonProperty
+    @Column(name = "is_deleted")
+    private boolean isDeleted = true;
 
-    @Column(name = "deleted_date")
+    @Column(name = "created_at")
     @CreationTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    Timestamp deletedDate = null;
+    private Timestamp createdAt;
+
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private Timestamp updatedAt;
+
+    @Column(name = "deleted_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private Timestamp deletedDate = null;
 }
