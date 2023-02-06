@@ -19,12 +19,6 @@ public class CommunityService {
     }
 
     public MessageResponse save(CommunityWriteRequest request) {
-        communityRepository.save(Community.builder()
-                .communityTitle(request.getTitle())
-                .communityContent(request.getContent())
-                //.userId(user)
-                .build());
-
         return new MessageResponse("Community Writer Ok");
     }
 

@@ -20,13 +20,13 @@ public class CommunityController {
     private final CommunityService communityService;
 
     @Operation(summary = "전체 커뮤니티 게시물 가져오기")
-    @GetMapping("/")
+    @GetMapping("/list")
     public ResponseEntity<List<Community>> list() {
         return ResponseEntity.ok(communityService.getCommunityList());
     }
 
     @Operation(summary = "커뮤니티 게시물 작성하기")
-    @PostMapping("/")
+    @PostMapping("/save")
     public ResponseEntity<MessageResponse> save(@RequestBody CommunityWriteRequest request) {
         return ResponseEntity.ok(communityService.save(request));
     }
